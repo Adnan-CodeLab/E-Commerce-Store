@@ -1,0 +1,37 @@
+.product-card {
+  display: block;
+  position: relative;
+  width: 280px;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(17,24,39,0.25);
+  text-decoration: none;
+  color: inherit;
+}
+
+.product-card img {
+  width: 100%;
+  height: auto;
+  transition: transform 0.5s ease; /* smooth zoom */
+}
+
+.product-card:hover img {
+  transform: scale(1.1); /* thoda zoom in */
+}
+
+.product-info {
+  padding: 1rem;
+  text-align: center;
+}
+
+.product-info h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  color: #111827;
+}
+
+.product-info .price {
+  font-weight: bold;
+  color: #E11D48; /* red price */
+}

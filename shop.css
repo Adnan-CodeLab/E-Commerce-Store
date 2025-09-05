@@ -1,0 +1,354 @@
+:root {
+  --luxury-gold: 42 85% 58%;   /* Gold color */
+  --bg: 220 35% 8%;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Satisfy', cursive;
+  background-color: hsl(var(--bg));
+}
+
+/* ================= HEADER ================= */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  background-color: hsl(220, 30%, 12%);
+  flex-wrap: wrap; /* responsive ke liye */
+}
+
+/* Left: Logo */
+.header-left .logo {
+  width: 150px;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Middle: Main Box with 5 sub-boxes */
+.header-middle .main-box {
+  display: flex;
+  gap: 12px;
+  border: 2px solid hsl(220, 25%, 25%);
+  border-radius: 1rem;
+  background-color: #303A50;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 0.5rem;
+}
+
+.header-middle .sub-box {
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  text-align: center;
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+  color: hsl(45, 15%, 97%);
+  font-size: 18px;
+  font-weight: 700;
+}
+
+a:hover {
+  color: hsl(var(--luxury-gold));
+}
+
+/* Right: Login box */
+.header-right .login-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: 2px solid hsl(220, 25%, 25%);
+  cursor: pointer;
+  background-color: #303A50;
+}
+
+/* ================= DIRECTION BOX ================= */
+.direction-box {
+  background-color: #303A50;
+  width: 100%;
+  max-width: 46rem;
+  height: 3rem;
+  margin: 1rem auto;
+  border-radius: 1rem;
+  border: 2px solid hsl(220, 25%, 25%);
+}
+
+.direction-box a {
+  color: hsl(45, 15%, 97%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.direction-box a:hover {
+  color: hsl(var(--luxury-gold));
+}
+
+/* ================= MAIN ================= */
+main {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  align-items: flex-start;
+  margin-top: 5rem;
+  flex-wrap: wrap;
+}
+
+.main-info {
+  flex: 1 1 500px;
+  max-width: 50rem;
+  background-color: hsl(220, 30%, 12%);
+  border: 2px solid hsl(220, 25%, 25%);
+  border-radius: 1rem;
+  padding: 1rem;
+}
+
+.main-info:hover {
+  border: 2px solid hsl(var(--luxury-gold));
+  transition: 0.5s ease-in-out;
+}
+
+.main-info h1 {
+  margin-bottom: 1rem;
+  color: hsl(45, 15%, 97%);
+  font-weight: 900;
+  text-align: center;
+}
+
+.main-info h2 {
+  color: hsl(var(--luxury-gold));
+  margin: 0.5rem 0;
+}
+
+.main-info span h2 {
+  color: #E5E7EB;
+  font-weight: 100;
+  font-size: 25px;
+}
+
+.more-info {
+  width: 100%;
+  margin-top: 1rem;
+  border-top: 2px solid hsl(220, 25%, 25%);
+  padding-top: 1rem;
+}
+
+.more-info h3 {
+  margin-top: 0.5rem;
+  color: #E5E7EB;
+  font-size: 1.2rem;
+}
+
+.photo {
+  flex: 0 1 18rem;
+  height: auto;
+}
+
+.photo .image {
+  width: 100%;
+  height: auto;
+  border-radius: 2rem;
+  object-fit: cover;
+}
+
+/* ================= FOOTER ================= */
+footer {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  margin-top: 3rem;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.about,
+.collections {
+  flex: 1 1 600px;
+  max-width: 65rem;
+  background-color: hsl(220, 30%, 12%);
+  padding: 1.5rem;
+  border-radius: 1rem;
+}
+
+.about h1,
+.collections h1 {
+  margin-bottom: 1rem;
+  color: #E5E7EB;
+}
+
+pre {
+  color: #2e5fc0;
+  font-size: 18px;
+  font-weight: 500;
+  white-space: pre-wrap;
+}
+
+/* ================= FEATURES ================= */
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  width: 100%;
+  max-width: 700px;
+}
+
+.box {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background-color: hsl(220, 30%, 12%);
+  color: #e5e7eb;
+  border: 2px solid hsl(220, 25%, 25%);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.box span{
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.box a {
+  color: #e5e7eb;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.icon-box {
+  height: 3rem;
+  width: 3rem;
+  background-color: hsl(220, 25%, 20%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.5rem;
+}
+
+.icon-box i {
+  color: hsl(var(--luxury-gold));
+  font-size: 1.3rem;
+}
+
+/* Hover Effect */
+.box:hover {
+  border-color: hsl(var(--luxury-gold));
+  background-color: hsl(220, 28%, 18%);
+}
+
+.box:hover .icon-box {
+  background-color: hsl(var(--luxury-gold));
+}
+
+.box:hover .icon-box i {
+  color: hsl(220, 30%, 12%);
+}
+
+.box:hover a {
+  color: hsl(var(--luxury-gold));
+}
+
+/* ================= COLLECTIONS ================= */
+.collections {
+  background: linear-gradient(
+    to right,
+    hsl(45 100% 60% / 0.1),
+    hsl(45 100% 60% / 0.05)
+  );
+  border: 1px solid hsl(45 100% 60% / 0.2);
+}
+
+.collections h1 {
+  text-align: center;
+  color: hsl(45 15% 97%);
+}
+
+.tag-line {
+  color: hsl(var(--luxury-gold));
+  text-shadow: 0 0 10px hsla(42,85%,58%,0.4);
+  letter-spacing: .5px;
+  animation: gold-glow 3s ease-in-out infinite;
+  display: block;
+  text-align: center;
+  margin: 1rem 0;
+}
+
+/* Glow pulsing */
+@keyframes gold-glow {
+  0% {
+    text-shadow: 0 0 8px hsla(42,85%,58%,0.3),
+                 0 0 16px hsla(42,85%,58%,0.2);
+  }
+  50% {
+    text-shadow: 0 0 12px hsla(42,85%,58%,0.6),
+                 0 0 24px hsla(42,85%,58%,0.4),
+                 0 0 36px hsla(42,85%,58%,0.2);
+  }
+  100% {
+    text-shadow: 0 0 8px hsla(42,85%,58%,0.3),
+                 0 0 16px hsla(42,85%,58%,0.2);
+  }
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 992px) {
+  header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .direction-box {
+    max-width: 90%;
+  }
+
+  main {
+    margin-top: 3rem;
+  }
+
+  .main-info {
+    width: 100%;
+  }
+
+  .about,
+  .collections {
+    width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .header-left .logo {
+    width: 120px;
+  }
+
+  .header-middle .main-box {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .photo {
+    width: 100%;
+    max-width: 12rem;
+  }
+
+  .features {
+    grid-template-columns: 1fr;
+  }
+
+  .tag-line {
+    font-size: 1rem;
+  }
+}

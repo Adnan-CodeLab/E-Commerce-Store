@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Floating Draggable Gallery</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.14.1/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.14.1/Draggable.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #081b29;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+    }
+
+    .gallery {
+      position: relative;
+      width: 90%;
+      max-width: 1200px;
+      height: 80vh;
+    }
+
+    .ring {
+      position: absolute;
+      width: 140px;
+      height: 140px;
+      border-radius: 15px;
+      overflow: hidden;
+      cursor: grab;
+      border: 2px solid #E9B020;
+      background: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 0 15px #E9B020;
+      transition: transform 0.3s;
+    }
+
+    .ring img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .ring:hover {
+      transform: scale(1.2) rotate(5deg);
+      z-index: 1000;
+    }
+
+    @media screen and (max-width:768px){
+      .ring { width: 100px; height: 100px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="gallery">
+  <div class="ring"><img src="Lucid_Origin_A_highquality_ecommerce_product_photo_of_a_diamon_3.jpg" alt="Ring 1"></div>
+  <div class="ring"><img src="Lucid_Origin_A_luxurious_highend_female_fashion_flat_lay_scene_1.jpg" alt="Ring 2"></div>
+  <div class="ring"><img src="Lucid_Origin_A_luxurious_highend_male_fashion_flat_lay_scene_f_0.jpg" alt="Ring 3"></div>
+  <div class="ring"><img src="Lucid_Origin_Create_a_modern_luxury_logo_using_an_abstract_geo_2-removebg-preview.png" alt="Ring 4"></div>
+  <div class="ring"><img src="DSC_1069 copy.jpg" alt="Ring 5"></div>
+</div>
+
+<script>
+  const rings = document.querySelectorAll(".ring");
+  const gallery = document.querySelector(".gallery");
+
+  rings.forEach((ring, index) => {
+    const galleryWidth = gallery.clientWidth - 150; // 150 = ring width
+    const galleryHeight = gallery.clientHeight - 150;
+
+    // Random x, y inside gallery
+    const x = Math.random() * galleryWidth;
+    const y = Math.random() * galleryHeight;
+
+    // Random rotation
+    const rotation = Math.random() * 20 - 10;
+
+    // Random z-index so none hidden behind others
+    const zIndex = index + 1;
+
+    gsap.set(ring, { x, y, rotation, zIndex });
+
+    Draggable.create(ring, {
+      type: "x,y",
+      edgeResistance: 0.8,
+      bounds: gallery,
+      inertia: true
+    });
+  });
+</script>
+
+</body>
+</html>

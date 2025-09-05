@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Editable Copy Boxes with Two Increment Boxes</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: black;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 20px;
+    position: relative; /* For absolute positioning of increment boxes */
+  }
+
+  .container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    max-width: 700px;
+    width: 100%;
+  }
+
+  .copy-box {
+    padding: 20px;
+    font-size: 18px;
+    text-align: center;
+    border: 2px solid #612E51;
+    border-radius: 10px;
+    background: black;
+    cursor: pointer;
+    transition: 0.2s;
+    user-select: none;
+    position: relative;
+    color: white;
+  }
+
+  .copy-box:hover {
+    background: #612E51;
+    color: white;
+  }
+
+  .copied-msg {
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 13px;
+    color: green;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .show {
+    opacity: 1;
+  }
+
+  .gap {
+    grid-column: 1 / -1;
+    height: 20px;
+  }
+
+  /* Small increment box - top right */
+  .increment-box-right {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 80px;
+    height: 40px;
+    font-size: 12px;
+    padding: 2px;
+    border: 2px solid #612E51;
+    border-radius: 5px;
+    background: #222;
+    color: white;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  .increment-box-right:hover {
+    background: #612E51;
+  }
+
+  /* Bigger increment box - top left */
+  .increment-box-left {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    width: 100px; /* slightly bigger */
+    height: 50px;
+    font-size:20px;
+    padding: 2px;
+    border: 2px solid #612E51;
+    border-radius: 5px;
+    background: #222;
+    color: white;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  .increment-box-left:hover {
+    background: #612E51;
+  }
+
+</style>
+</head>
+<body>
+
+<div class="container">
+  <!-- Editable copy boxes -->
+  <div class="copy-box" contenteditable="true" onclick="copyText(this)">haji arshad<span class="copied-msg">Copied!</span></div>
+  <div class="copy-box" contenteditable="true" onclick="copyText(this)">دوپٹے پلو کٹائی<span class="copied-msg">Copied!</span></div>
+  <div class="copy-box" contenteditable="true" onclick="copyText(this)">دوپٹے 4 طرف پلو کٹائ<span class="copied-msg">Copied!</span></div>
+  <div class="copy-box" contenteditable="true" onclick="copyText(this)">لیس فرنٹ بیک بازو پریس<span class="copied-msg">Copied!</span></div>
+
+  <div class="copy-box" contenteditable="true" onclick="copyText(this)">دوپٹے 4 سلئی<span class="copied-msg">Copied!</span></div>
+  <div class="copy-box" contenteditable="true" onclick="copyText(this)">رپیٹ لمبی لیس کاویہ سراخ ایک لیس<span class="copied-msg">Copied!</span></div>
+  <div class="copy-box" contenteditable="true" onclick="copyText(this)">رپیٹ لمبی لیس کاویہ 8 والی<span class="copied-msg">Copied!</span></div>
+  <div class="copy-box" contenteditable="true" onclick="copyText(this)">دوپٹے پلو کٹائی چیکو<span class="copied-msg">Copied!</span></div>
+
+  <div class="copy-box" contenteditable="true" onclick="copyText(this)">دوپٹے 4 طرف پلو کٹائی پتہ<span class="copied-msg">Copied!</span></div>
+  <div class="copy-box" contenteditable="true" onclick="copyText(this)">دوپٹے پلو کٹائی چیکو<span class="copied-msg">Copied!</span></div>
+  <div class="copy-box" contenteditable="true" onclick="copyText(this)">رپیٹ لمبی لیس کاویہ 27 والی<span class="copied-msg">Copied!</span></div>
+  <div class="copy-box" contenteditable="true" onclick="copyText(this)">رپیٹ لمبی لیس کاویہ 22 والی<span class="copied-msg">Copied!</span></div>
+
+  <div class="copy-box" contenteditable="true" onclick="copyText(this)">رپیٹ لمبی لیس کاویہ 24 والی<span class="copied-msg">Copied!</span></div>
+  <div class="copy-box" contenteditable="true" onclick="copyText(this)">لمبی لیس کاویہ ویلوٹ<span class="copied-msg">Copied!</span></div>
+  <div class="copy-box" contenteditable="true" onclick="copyText(this)">رپیٹ 24 پلو کاویہ پتہ کاویہ ویلوٹ<span class="copied-msg">Copied!</span></div>
+  <div class="copy-box" contenteditable="true" onclick="copyText(this)">رپیٹ 24 پلو پتہ کاویہ<span class="copied-msg">Copied!</span></div>
+
+  <div class="copy-box" contenteditable="true" onclick="copyText(this)">شال پلو کٹائی<span class="copied-msg">Copied!</span></div>
+  <div class="copy-box" contenteditable="true" onclick="copyText(this)">لمبی لیس کاویہ ویلوٹ<span class="copied-msg">Copied!</span></div>
+  <div class="copy-box" contenteditable="true" onclick="copyText(this)">رپیٹ لمبی لیس کاویہ 8 والی<span class="copied-msg">Copied!</span></div>
+  <div class="copy-box" contenteditable="true" onclick="copyText(this)">رپیٹ لمبی لیس کاویہ 16 والی<span class="copied-msg">Copied!</span></div>
+
+  <div class="copy-box" contenteditable="true" onclick="copyText(this)">رپیٹ لمبی لیس کاویہ 15 والی<span class="copied-msg">Copied!</span></div>
+  <div class="copy-box" contenteditable="true" onclick="copyText(this)">رپیٹ 24 پلو کاویہ<span class="copied-msg">Copied!</span></div>
+  <div class="copy-box" contenteditable="true" onclick="copyText(this)">رپیٹ 192 پھول پتہ کاویہ<span class="copied-msg">Copied!</span></div>
+  <div class="copy-box" contenteditable="true" onclick="copyText(this)">رپیٹ 24 پلو کاویہ سراخ<span class="copied-msg">Copied!</span></div>
+
+  <div class="gap"></div>
+
+  <!-- 5 empty boxes for later editing -->
+  <div class="copy-box" contenteditable="true" onclick="copyText(this)">نیا متن یہاں لکھیں<span class="copied-msg">Copied!</span></div>
+  <div class="copy-box" contenteditable="true" onclick="copyText(this)">نیا متن یہاں لکھیں<span class="copied-msg">Copied!</span></div>
+  <div class="copy-box" contenteditable="true" onclick="copyText(this)">نیا متن یہاں لکھیں<span class="copied-msg">Copied!</span></div>
+  <div class="copy-box" contenteditable="true" onclick="copyText(this)">نیا متن یہاں لکھیں<span class="copied-msg">Copied!</span></div>
+  <div class="copy-box" contenteditable="true" onclick="copyText(this)">نیا متن یہاں لکھیں<span class="copied-msg">Copied!</span></div>
+
+</div>
+
+<!-- Small Increment Box - top right -->
+<div class="increment-box-right" onclick="incrementAndCopyRight(this)">4960</div>
+
+<!-- Bigger Increment Box - top left -->
+<div class="increment-box-left" onclick="incrementAndCopyLeft(this)">150521</div>
+
+<script>
+function copyText(element) {
+  let text = element.innerText.replace('Copied!', '').trim();
+  navigator.clipboard.writeText(text).then(() => {
+    let msg = element.querySelector(".copied-msg");
+    msg.classList.add("show");
+    setTimeout(() => msg.classList.remove("show"), 1000);
+  });
+}
+
+// Increment box functionality - right
+let currentNumberRight = 4960;
+function incrementAndCopyRight(element) {
+  currentNumberRight += 1;
+  element.innerText = currentNumberRight;
+  navigator.clipboard.writeText(currentNumberRight.toString());
+}
+
+// Increment box functionality - left
+let currentNumberLeft = 150521;
+function incrementAndCopyLeft(element) {
+  currentNumberLeft += 1;
+  element.innerText = currentNumberLeft;
+  navigator.clipboard.writeText(currentNumberLeft.toString());
+}
+</script>
+
+</body>
+</html>
