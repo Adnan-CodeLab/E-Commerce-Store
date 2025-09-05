@@ -59,19 +59,123 @@
 
     /* Animation Classes */
     .animate{opacity:1 !important; transform:translateY(0) !important;}
+
+    /* Share Section */
+    .share-section {
+        text-align: center;
+        margin: 2rem 0;
+        background: rgba(255,255,255,0.05);
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+        border: 2px solid #E9B020;
+    }
+    .share-section h2 {
+        color: #E9B020;
+        margin-bottom: 10px;
+    }
+    .share-section p {
+        color: #fff;
+        margin-bottom: 15px;
+    }
+    .share-section button {
+        margin: 0.5rem;
+        padding: 0.6rem 1.2rem;
+        border: none;
+        border-radius: 0.3rem;
+        background: #E9B020;
+        color: #fff;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+    .share-section button:hover {
+        background: #d4a300;
+    }
+
+    /* Review Section */
+    .review-section {
+        margin: 2rem auto;
+        padding: 1.5rem;
+        max-width: 700px;
+        background: rgba(255,255,255,0.05);
+        border-radius: 0.5rem;
+        border: 2px solid #E9B020;
+        color: #fff;
+    }
+    .review-section h2 {
+        color: #E9B020;
+        margin-bottom: 1rem;
+        text-align: center;
+    }
+    .review-section form {
+        display: flex;
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+    .review-section input,
+    .review-section textarea {
+        padding: 0.7rem;
+        border-radius: 0.3rem;
+        border: none;
+        outline: none;
+        font-size: 1rem;
+    }
+    .review-section textarea {
+        resize: none;
+        height: 100px;
+    }
+    .stars {
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: #777;
+        display:flex;
+        justify-content:center;
+        gap:5px;
+    }
+    .stars span {
+        font-size: 2rem;
+        cursor: pointer;
+        color: #555;
+        transition: color 0.3s;
+    }
+    .stars span.active {
+        color: #E9B020;
+    }
+    .review-section button {
+        padding: 0.7rem;
+        border: none;
+        border-radius: 0.3rem;
+        background: #E9B020;
+        color: #fff;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+    .review-section button:hover {
+        background: #d4a300;
+    }
+    #reviewsList {
+        margin-top: 1.5rem;
+    }
+    .review-item {
+        background: rgba(255,255,255,0.1);
+        padding: 1rem;
+        margin-bottom: 1rem;
+        border-radius: 0.4rem;
+    }
 </style>
 </head>
 <body>
 
 <header>
     <h1 class="animate-on-scroll">About Us</h1>
-    <p class="animate-on-scroll">Providing quality products and services to our customers with trust and excellence.</p>
+    <p class="animate-on-scroll">Our Tag-Line:“Everything You Need, All in One Place”</p>
 </header>
 
 <section class="animate-on-scroll">
-    <h2>Our Story</h2>
-    <p>Started in 2020, our store aims to bring a wide variety of products – from fresh fruits and vegetables to snacks, clothes, and accessories – all in one place for our customers in Pakistan.</p>
-    <p>We believe in delivering high-quality products with exceptional service and a seamless shopping experience.</p>
+    <h2>About Our Store</h2>
+    <p>We are a hybrid marketplace that operates both as a physical store and an online E-commerce platform. With a strong presence in Pakistan, we aim to make shopping more convenient by allowing you to explore and order your favorite products directly from the comfort of your home. Whether you are in a major city or a small town, our reliable nationwide delivery ensures that your order reaches you safely and on time.</p>
+    <p>At our store, you will find a wide range of products to suit every need. From kids’ clothing and toys to women’s apparel, jewelry, cosmetics, and from men’s watches, perfumes, and accessories to everyday household essentials—we bring everything under one roof. Our goal is to provide quality, variety, and trust, making sure that you enjoy a seamless shopping experience every time.</p>
 </section>
 
 <section class="animate-on-scroll">
@@ -83,7 +187,7 @@
         </div>
         <div class="card">
             <h3>Our Vision</h3>
-            <p>To become the most trusted general store in Pakistan known for our quality, reliability, and customer satisfaction.</p>
+            <p>To become the most trusted E-Commerce(Online) store in Pakistan known for our quality, reliability, and customer satisfaction.</p>
         </div>
     </div>
 </section>
@@ -97,16 +201,44 @@
             <p>Founder & CEO</p>
         </div>
         <div class="member">
-            <img src="https://via.placeholder.com/150" alt="Team Member">
-            <h4>Sarah Khan</h4>
-            <p>Marketing Head</p>
+            <img src="DSC_1069 copy.jpg" alt="Partner">
+            <h4>Coming Soon...</h4>
+            <p>Partner</p>
         </div>
         <div class="member">
-            <img src="https://via.placeholder.com/150" alt="Team Member">
-            <h4>Ali Raza</h4>
-            <p>Operations Manager</p>
+            <img src="DSC_1069 copy.jpg" alt="Co-Owner">
+            <h4>Sh.Altaf Ahmed</h4>
+            <p>Co-Owner</p>
         </div>
     </div>
+</section>
+
+<section class="animate-on-scroll share-section">
+    <h2>Share Our Store</h2>
+    <p>Help us grow by sharing with your friends!</p>
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https://yourwebsite.com" target="_blank"><button>Share on Facebook</button></a>
+    <a href="https://api.whatsapp.com/send?text=Check%20out%20this%20amazing%20store!%20https://yourwebsite.com" target="_blank"><button>Share on WhatsApp</button></a>
+    <a href="https://twitter.com/intent/tweet?text=Check%20out%20this%20amazing%20store!&url=https://yourwebsite.com" target="_blank"><button>Share on Twitter</button></a>
+    <a href="mailto:?subject=Check this Store&body=Visit this amazing store: https://yourwebsite.com"><button>Share via Email</button></a>
+</section>
+
+<section class="animate-on-scroll review-section">
+    <h2>Customer Reviews</h2>
+    <form id="reviewForm">
+        <input type="text" id="name" placeholder="Your Name" required>
+        <input type="email" id="email" placeholder="Your Gmail (Optional)">
+        <textarea id="review" placeholder="Write your review..." required></textarea>
+        <div class="stars" id="starContainer">
+          <span data-star="1">&#9733;</span>
+          <span data-star="2">&#9733;</span>
+          <span data-star="3">&#9733;</span>
+          <span data-star="4">&#9733;</span>
+          <span data-star="5">&#9733;</span>
+        </div>
+        <input type="hidden" id="rating" value="0">
+        <button type="submit">Submit Review</button>
+    </form>
+    <div id="reviewsList"></div>
 </section>
 
 <section class="animate-on-scroll">
@@ -122,7 +254,6 @@
 <script>
     // Scroll animation
     const animateElements = document.querySelectorAll('.animate-on-scroll');
-
     function animateOnScroll(){
         const triggerBottom = window.innerHeight * 0.85;
         animateElements.forEach(el => {
@@ -132,10 +263,43 @@
             }
         });
     }
-
     window.addEventListener('scroll', animateOnScroll);
     window.addEventListener('load', animateOnScroll);
-</script>
 
+    // Star rating functionality
+    const stars = document.querySelectorAll("#starContainer span");
+    const ratingInput = document.getElementById("rating");
+
+    stars.forEach((star, index) => {
+      star.addEventListener("click", () => {
+        let ratingValue = index + 1;
+        ratingInput.value = ratingValue;
+
+        stars.forEach(s => s.classList.remove("active"));
+
+        for (let i = 0; i < ratingValue; i++) {
+          stars[i].classList.add("active");
+        }
+      });
+    });
+
+    // Simple review submit (only front-end display)
+    const reviewForm = document.getElementById("reviewForm");
+    const reviewsList = document.getElementById("reviewsList");
+    reviewForm.addEventListener("submit", function(e){
+        e.preventDefault();
+        const name = document.getElementById("name").value;
+        const reviewText = document.getElementById("review").value;
+        const rating = document.getElementById("rating").value;
+
+        const reviewItem = document.createElement("div");
+        reviewItem.classList.add("review-item");
+        reviewItem.innerHTML = `<strong>${name}</strong> - Rating: ${rating} ★<p>${reviewText}</p>`;
+        reviewsList.prepend(reviewItem);
+
+        reviewForm.reset();
+        stars.forEach(s => s.classList.remove("active"));
+    });
+</script>
 </body>
 </html>
