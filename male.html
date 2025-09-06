@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Big + Small Image Slider with Zoom</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #e4e4e4;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-family: sans-serif;
+      overflow-x: hidden;
+    }
+
+    .wrapper {
+      position: relative;
+      margin-top: 40px;
+      text-align: center;
+    }
+
+    /* Bari wali image (zoom ke liye container) */
+    #imageZoom {
+      width: 1260px;
+      height: 600px;
+      border: 3px solid #333;
+      position: relative;
+      overflow: hidden;
+      cursor: zoom-in;
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    #imageZoom img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Neeche chhoti copy (overlap style) */
+    .small {
+      width: 400px;
+      height: 250px;
+      object-fit: cover;
+      border: 2px solid #555;
+      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+      margin-top: -120px;
+      transition: opacity 0.6s ease, transform 0.6s ease;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Slider buttons */
+    .controls {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      display: flex;
+      gap: 10px;
+      z-index: 100;
+    }
+    .controls button {
+      padding: 10px 15px;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      background: #333;
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .controls button:hover {
+      background: #555;
+    }
+
+    /* Animations */
+    .fade-out { opacity: 0; transform: scale(0.95); }
+    .fade-in { opacity: 1; transform: scale(1); }
+
+    /* Mobile ke liye */
+    @media (max-width: 768px) {
+      #imageZoom {
+        width: 95vw;
+        height: auto;
+      }
+      .small {
+        width: 60vw;
+        height: auto;
+        margin-top: -80px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <!-- Bari wali image with zoom -->
+    <div id="imageZoom">
+      <img src="Fashion2.jpg" alt="Big Image" id="bigImg">
+    </div>
+
+    <!-- Neeche chhoti wali copy -->
+    <img src="Fashion1.jpg" alt="Small Image" class="small" id="smallImg">
+  </div>
+
+  <!-- Buttons -->
+  <div class="controls">
+    <button onclick="prevImg()">⟨ Prev</button>
+    <button onclick="nextImg()">Next ⟩</button>
+  </div>
+
+  <script>
+    // Alag arrays for big and small
+    const bigImages = ["Fashion2.jpg","Footwear2.jpg", "Accessories2.jpg", "Gromming2.jpg", "Gadgets2.jpg"];
+    const smallImages = ["Fashion1.jpg","Footwear1.jpg", "Accessories1.jpg", "Gromming1.jpg", "Gadgets1.jpg"];
+
+    let index = 0;
+
+    const bigImg = document.getElementById("bigImg");
+    const smallImg = document.getElementById("smallImg");
+    const imageZoom = document.getElementById("imageZoom");
+
+    // Zoom layer
+    const zoomLayer = document.createElement('div');
+    zoomLayer.style.position = 'absolute';
+    zoomLayer.style.top = 0;
+    zoomLayer.style.left = 0;
+    zoomLayer.style.width = '100%';
+    zoomLayer.style.height = '100%';
+    zoomLayer.style.backgroundImage = `url('${bigImages[index]}')`;
+    zoomLayer.style.backgroundSize = '200%';
+    zoomLayer.style.display = 'none';
+    zoomLayer.style.pointerEvents = 'none';
+    imageZoom.appendChild(zoomLayer);
+
+    // Zoom effect
+    imageZoom.addEventListener('mousemove', (e) => {
+      zoomLayer.style.display = 'block';
+      let x = (e.offsetX / imageZoom.offsetWidth) * 100;
+      let y = (e.offsetY / imageZoom.offsetHeight) * 100;
+      zoomLayer.style.backgroundPosition = `${x}% ${y}%`;
+    });
+    imageZoom.addEventListener('mouseleave', () => {
+      zoomLayer.style.display = 'none';
+    });
+
+    function showImage(newIndex) {
+      bigImg.classList.add("fade-out");
+      smallImg.classList.add("fade-out");
+
+      setTimeout(() => {
+        index = (newIndex + bigImages.length) % bigImages.length;
+
+        // update images
+        bigImg.src = bigImages[index];
+        smallImg.src = smallImages[index];
+
+        // update zoom layer
+        zoomLayer.style.backgroundImage = `url('${bigImages[index]}')`;
+
+        bigImg.classList.remove("fade-out");
+        smallImg.classList.remove("fade-out");
+
+        bigImg.classList.add("fade-in");
+        smallImg.classList.add("fade-in");
+
+        setTimeout(() => {
+          bigImg.classList.remove("fade-in");
+          smallImg.classList.remove("fade-in");
+        }, 600);
+      }, 600);
+    }
+
+    function nextImg() {
+      showImage(index + 1);
+    }
+    function prevImg() {
+      showImage(index - 1);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsive Image Slider</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+  <style>
+    body {
+      background-color: #3A0E6A;
+      color: #ddd;
+      font-family: system-ui;
+      margin: 0;
+    }
+    .container {
+      position: absolute;
+      width: 1000px;
+      height: 600px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      background-image: radial-gradient(#320643, #140534);
+      overflow: hidden;
+    }
+    .header {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      z-index: 1111;
+      padding: 10px;
+    }
+    .header .logo {
+      width: 40px;
+      height: 40px;
+      display: inline-block;
+    }
+    .header ul {
+      padding: 0;
+      margin: 0;
+      list-style: none;
+      display: inline-block;
+      transform: translate(0,-14px);
+    }
+    .header li {
+      display: inline-block;
+      font-size: 13px;
+      margin-left: 20px;
+    }
+    .directional {
+      position: absolute;
+      bottom: 1px;
+      width: 100%;
+      text-align: center;
+      z-index: 3;
+    }
+    .directional button {
+      width: 50px;
+      height: 50px;
+      color: #fff;
+      background-color: transparent;
+      border: none;
+      opacity: 0.2;
+    }
+    .directional button:hover {
+      opacity: 1;
+    }
+    #slide {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+    #slide .item {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+    #slide .item .image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transform: scale(3);
+      transition: 1.5s;
+    }
+    #slide .item .image img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      transition: transform 0.6s ease;
+      cursor: zoom-in;
+    }
+    #slide .item .image img:hover {
+      transform: scale(1.2);
+      cursor: zoom-out;
+    }
+    /* Active Slide */
+    #slide .item:nth-child(1) .image {
+      opacity: 0;
+      transform: scale(0) translate(-100px);
+    }
+    #slide .item:nth-child(2) .image {
+      opacity: 1;
+      transform: scale(1);
+    }
+    #slide .item:nth-child(2) {
+      z-index: 3;
+    }
+
+    /* ========== RESPONSIVE MEDIA QUERIES ========== */
+    @media (max-width: 1024px) {
+      .container {
+        width: 90vw;
+        height: 60vh;
+      }
+    }
+    @media (max-width: 768px) {
+      .container {
+        width: 95vw;
+        height: 55vh;
+      }
+      .header li {
+        font-size: 11px;
+        margin-left: 10px;
+      }
+      .directional button {
+        width: 40px;
+        height: 40px;
+      }
+    }
+    @media (max-width: 480px) {
+      .container {
+        width: 100vw;
+        height: 50vh;
+      }
+      .header ul {
+        display: none; /* mobile par sirf logo dikhana */
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <img src="logo.png" class="logo">
+      <ul>
+        <li>HOME</li>
+        <li>CATEGORY</li>
+        <li>INFO</li>
+        <li>CONTACT</li>
+      </ul>
+    </div>
+    <div id="slide">
+      <div class="item"><div class="image"><img src="Mobile1.jpg" alt="Mobile"></div></div>
+      <div class="item"><div class="image"><img src="Wearable.jpg" alt="Wearable"></div></div>
+      <div class="item"><div class="image"><img src="Audio2.jpg" alt="Audio"></div></div>
+      <div class="item"><div class="image"><img src="Personal Care2.jpg" alt="Personal Care"></div></div>
+    </div>
+    <div class="directional">
+      <button id="prev"><i class="fa-solid fa-angle-left"></i></button>
+      <button id="next"><i class="fa-solid fa-angle-right"></i></button>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('next').onclick = function(){
+      let lists = document.querySelectorAll('.item');
+      document.getElementById('slide').appendChild(lists[0]);
+    }
+    document.getElementById('prev').onclick = function(){
+      let lists = document.querySelectorAll('.item');
+      document.getElementById('slide').prepend(lists[lists.length - 1]);
+    }
+  </script>
+</body>
+</html>

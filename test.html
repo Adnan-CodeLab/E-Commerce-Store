@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Image Zoom</title>
+<style>
+#imageZoom {
+    width: 550px;
+    height: 700px;
+    position: relative;
+    overflow: hidden;
+    cursor: zoom-in;
+}
+#imageZoom img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+#imageZoom::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    display: none;
+    pointer-events: none;
+    background-image: url('Male.jpg');
+    background-size: 200%;
+    background-repeat: no-repeat;
+}
+</style>
+</head>
+<body>
+
+<div id="imageZoom"></div>
+<img id="imageSrc" src="Male.jpg" style="display:none;">
+
+<script>
+const imageZoom = document.getElementById('imageZoom');
+const zoomLayer = document.createElement('div');
+zoomLayer.style.position = 'absolute';
+zoomLayer.style.top = 0;
+zoomLayer.style.left = 0;
+zoomLayer.style.width = '100%';
+zoomLayer.style.height = '100%';
+zoomLayer.style.backgroundImage = "url('Male.jpg')";
+zoomLayer.style.backgroundSize = '200%';
+zoomLayer.style.display = 'none';
+zoomLayer.style.pointerEvents = 'none';
+imageZoom.appendChild(zoomLayer);
+
+imageZoom.addEventListener('mousemove', (e) => {
+    zoomLayer.style.display = 'block';
+    let x = (e.offsetX / imageZoom.offsetWidth) * 100;
+    let y = (e.offsetY / imageZoom.offsetHeight) * 100;
+    zoomLayer.style.backgroundPosition = `${x}% ${y}%`;
+});
+
+imageZoom.addEventListener('mouseleave', () => {
+    zoomLayer.style.display = 'none';
+});
+
+// Show the image inside container
+const img = document.createElement('img');
+img.src = 'Male.jpg';
+img.style.width = '100%';
+img.style.height = '100%';
+img.style.objectFit = 'cover';
+imageZoom.appendChild(img);
+</script>
+</body>
+</html>
