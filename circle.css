@@ -1,0 +1,59 @@
+:root { 
+  --main-color: hsl(210, 80%, 45%); /* subtle blue */
+} 
+
+.click-glow {
+  position: absolute; 
+  width:100px;
+  height: 100px;
+  background: var(--main-color);
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0.5; 
+  transform: translate(-50%, -50%) scale(0);
+  animation: glow-pulse 0.6s ease-out forwards;
+  z-index: 2; 
+}
+
+@keyframes glow-pulse {
+  0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0.6; } 
+  50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.3; } 
+  100% { transform: translate(-50%, -50%) scale(2); opacity: 0; } 
+}
+
+.click-spark {
+  position: absolute;
+  width:12px; 
+  height:12px; 
+  background: var(--main-color); 
+  border-radius: 50%; 
+  pointer-events: none; 
+  animation: spark-fade 0.6s ease-out forwards;
+  box-shadow:
+    0 0 6px hsl(210, 80%, 45%),   /* subtle blue */
+    0 0 18px hsl(50, 95%, 65%),    /* bright yellow */
+    0 0 35px hsl(50, 95%, 65%);    /* bright yello*/
+}
+
+.circle{
+    height: 24px;
+    width: 24px;
+    border-radius: 24px;
+    background-color: black;
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Text selection color */
+::selection {
+    background-color: hsl(42, 85%, 58%); /* bright gold */
+    color: hsl(220, 30%, 12%); /* dark text */
+}
+
+::-moz-selection {
+    background-color: hsl(42, 85%, 58%);
+    color: hsl(220, 30%, 12%);
+}

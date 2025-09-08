@@ -352,3 +352,14 @@ pre {
     font-size: 1rem;
   }
 }
+
+/* Text selection color */
+::selection {
+    background-color: hsl(42, 85%, 58%); /* bright gold */
+    color: hsl(220, 30%, 12%); /* dark text */
+}
+
+::-moz-selection {
+    background-color: hsl(42, 85%, 58%);
+    color: hsl(220, 30%, 12%);
+}
