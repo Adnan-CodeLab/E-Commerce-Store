@@ -4,33 +4,146 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Big + Small Image Slider with Zoom</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <style>
+    :root {
+      --luxury-gold: hsl(42 85% 58%);
+      --bg: hsl(220 35% 8%);
+      --white: hsl(0 0% 100%);
+    }
+
     body {
       margin: 0;
       padding: 0;
-      background: #e4e4e4;
+      background: var(--bg);
       display: flex;
       flex-direction: column;
       align-items: center;
-      font-family: sans-serif;
+      font-family: 'Inter', sans-serif;
       overflow-x: hidden;
+      color: var(--white);
     }
 
+    /* ===== Header ===== */
+    .header {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      padding: 0.8rem 2rem;
+      position: sticky;
+      top: 0;
+      width: 100%;
+      z-index: 100;
+    }
+
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .logo {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--luxury-gold);
+    }
+
+    .glass-box {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 0.5rem 1rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .glass-box .home-link {
+      text-decoration: none;
+      font-weight: 600;
+      color: var(--white);
+      transition: 0.3s;
+    }
+
+    .glass-box .home-link:hover {
+      color: var(--luxury-gold);
+    }
+
+    .search-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .search-bar input {
+      padding: 0.4rem 0.8rem;
+      border: none;
+      border-radius: 8px;
+      outline: none;
+      font-size: 1rem;
+    }
+
+    .search-bar button {
+      padding: 0.4rem 0.8rem;
+      border: none;
+      border-radius: 8px;
+      background: var(--luxury-gold);
+      color: var(--bg);
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    .search-bar button:hover {
+      background: var(--white);
+      color: var(--luxury-gold);
+    }
+
+    .cart-link {
+      text-decoration: none;
+      font-weight: 600;
+      color: var(--white);
+      transition: 0.3s;
+    }
+
+    .cart-link:hover {
+      color: var(--luxury-gold);
+    }
+
+    @media (max-width: 768px) {
+      .header-content {
+        flex-direction: column;
+        gap: 0.8rem;
+      }
+      .glass-box {
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+      .search-bar input {
+        width: 150px;
+      }
+    }
+
+    /* ===== Main Image + Small Image ===== */
     .wrapper {
       position: relative;
       margin-top: 40px;
       text-align: center;
     }
 
-    /* Bari wali image (zoom ke liye container) */
     #imageZoom {
       width: 1260px;
-      height: 600px;
-      border: 3px solid #333;
+      height: 650px;
+      border: 3px solid var(--luxury-gold);
+      border-radius: 12px;
       position: relative;
       overflow: hidden;
       cursor: zoom-in;
       transition: opacity 0.6s ease, transform 0.6s ease;
+      box-shadow: 0 0 25px rgba(0,0,0,0.5);
     }
     #imageZoom img {
       width: 100%;
@@ -39,20 +152,25 @@
       display: block;
     }
 
-    /* Neeche chhoti copy (overlap style) */
     .small {
-      width: 400px;
-      height: 250px;
+      width: 420px;
+      height: 260px;
       object-fit: cover;
-      border: 2px solid #555;
-      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+      border: 2px solid var(--luxury-gold);
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.6);
       margin-top: -120px;
-      transition: opacity 0.6s ease, transform 0.6s ease;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
       position: relative;
       z-index: 2;
+      cursor: pointer;
+    }
+    .small:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 25px var(--luxury-gold);
     }
 
-    /* Slider buttons */
+    /* Buttons */
     .controls {
       position: fixed;
       right: 20px;
@@ -66,27 +184,28 @@
       font-size: 16px;
       border: none;
       border-radius: 6px;
-      background: #333;
-      color: #fff;
+      background: var(--luxury-gold);
+      color: var(--bg);
       cursor: pointer;
-      transition: background 0.3s ease;
+      font-weight: 600;
+      transition: 0.3s ease;
     }
     .controls button:hover {
-      background: #555;
+      background: var(--white);
+      color: var(--luxury-gold);
     }
 
     /* Animations */
     .fade-out { opacity: 0; transform: scale(0.95); }
     .fade-in { opacity: 1; transform: scale(1); }
 
-    /* Mobile ke liye */
     @media (max-width: 768px) {
       #imageZoom {
         width: 95vw;
         height: auto;
       }
       .small {
-        width: 60vw;
+        width: 65vw;
         height: auto;
         margin-top: -80px;
       }
@@ -94,14 +213,27 @@
   </style>
 </head>
 <body>
-  <div class="wrapper">
-    <!-- Bari wali image with zoom -->
-    <div id="imageZoom">
-      <img src="Fashion2.jpg" alt="Big Image" id="bigImg">
+  <!-- Header -->
+  <header class="header">
+    <div class="header-content">
+      <div class="logo">MyStore</div>
+      <div class="glass-box">
+        <a href="index.html" class="home-link"><i class="fa-solid fa-house" style="color: hsl(42, 85%, 58%);"></i>Home</a>
+        <div class="search-bar">
+          <input type="text" placeholder="Search products...">
+          <button>🔍</button>
+        </div>
+      </div>
+      <a href="cart.html" class="cart-link">🛒 My Cart</a>
     </div>
+  </header>
 
-    <!-- Neeche chhoti wali copy -->
-    <img src="Fashion1.jpg" alt="Small Image" class="small" id="smallImg">
+  <!-- Main Wrapper -->
+  <div class="wrapper">
+    <div id="imageZoom">
+      <img src="Images/Fashion2.jpg" alt="Big Image" id="bigImg">
+    </div>
+    <img src="Images/Fashion1.jpg" alt="Small Image" class="small" id="smallImg">
   </div>
 
   <!-- Buttons -->
@@ -111,9 +243,8 @@
   </div>
 
   <script>
-    // Alag arrays for big and small
-    const bigImages = ["Fashion2.jpg","FootWear2.jpg", "Accessories2.jpg", "Gromming2.jpg", "Gadgets2.jpg"];
-    const smallImages = ["Fashion1.jpg","Footwear1.jpg", "Accessories1.jpg", "Gromming1.jpg", "Gadgets1.jpg"];
+    const bigImages = ["Images/Fashion2.jpg","Images/FootWear2.jpg", "Images/Accessories2.jpg", "Images/Gromming2.jpg", "Images/Gadgets2.jpg"];
+    const smallImages = ["Images/Fashion1.jpg","Images/Footwear1.jpg", "Images/Accessories1.jpg", "Images/Gromming1.jpg", "Images/Gadgets1.jpg"];
 
     let index = 0;
 
@@ -121,7 +252,6 @@
     const smallImg = document.getElementById("smallImg");
     const imageZoom = document.getElementById("imageZoom");
 
-    // Zoom layer
     const zoomLayer = document.createElement('div');
     zoomLayer.style.position = 'absolute';
     zoomLayer.style.top = 0;
@@ -134,7 +264,6 @@
     zoomLayer.style.pointerEvents = 'none';
     imageZoom.appendChild(zoomLayer);
 
-    // Zoom effect
     imageZoom.addEventListener('mousemove', (e) => {
       zoomLayer.style.display = 'block';
       let x = (e.offsetX / imageZoom.offsetWidth) * 100;
@@ -151,20 +280,13 @@
 
       setTimeout(() => {
         index = (newIndex + bigImages.length) % bigImages.length;
-
-        // update images
         bigImg.src = bigImages[index];
         smallImg.src = smallImages[index];
-
-        // update zoom layer
         zoomLayer.style.backgroundImage = `url('${bigImages[index]}')`;
-
         bigImg.classList.remove("fade-out");
         smallImg.classList.remove("fade-out");
-
         bigImg.classList.add("fade-in");
         smallImg.classList.add("fade-in");
-
         setTimeout(() => {
           bigImg.classList.remove("fade-in");
           smallImg.classList.remove("fade-in");
@@ -172,12 +294,8 @@
       }, 600);
     }
 
-    function nextImg() {
-      showImage(index + 1);
-    }
-    function prevImg() {
-      showImage(index - 1);
-    }
+    function nextImg() { showImage(index + 1); }
+    function prevImg() { showImage(index - 1); }
   </script>
 </body>
 </html>

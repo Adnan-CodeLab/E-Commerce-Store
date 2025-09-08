@@ -1,50 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="kids.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zoom Image Gallery</title>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="kids.css">
 </head>
 <body>
-    <main>
-        <div class="slider" style="
-            --width: 100px;
-            --height: 70px;
-            --quantity: 10;
-        ">
-            <div class="list">
-                <a href="product.html"><div class="item" style="--position: 1"><img src="Logo.png" alt=""></div></a>
-                <div class="item" style="--position: 2"><img src="images/slider1_2.png" alt=""></div>
-                <div class="item" style="--position: 3"><img src="images/slider1_3.png" alt=""></div>
-                <div class="item" style="--position: 4"><img src="images/slider1_4.png" alt=""></div>
-                <div class="item" style="--position: 5"><img src="images/slider1_5.png" alt=""></div>
-                <div class="item" style="--position: 6"><img src="images/slider1_6.png" alt=""></div>
-                <div class="item" style="--position: 7"><img src="images/slider1_7.png" alt=""></div>
-                <div class="item" style="--position: 8"><img src="images/slider1_8.png" alt=""></div>
-                <div class="item" style="--position: 9"><img src="images/slider1_9.png" alt=""></div>
-                <div class="item" style="--position: 10"><img src="images/slider1_10.png" alt=""></div>
-            </div>
-        </div>
-
-        <div class="slider" reverse="true" style="
-            --width: 200px;
-            --height: 200px;
-            --quantity: 9;
-        ">
-            <div class="list">
-                <a href="product.html"><div class="item" style="--position: 1"><img src="Kids.jpg" alt=""></div></a>
-                <div class="item" style="--position: 2"><img src="DSC_1069 copy.jpg" alt=""></div>
-                <div class="item" style="--position: 3"><img src="Male.jpg" alt=""></div>
-                <div class="item" style="--position: 4"><img src="Female.jpg" alt=""></div>
-                <div class="item" style="--position: 5"><img src="Ring.jpg" alt=""></div>
-                <div class="item" style="--position: 6"><img src="International.jpg" alt=""></div>
-                <div class="item" style="--position: 7"><img src="watch.jpg" alt=""></div>
-                <div class="item" style="--position: 8"><img src="Kids.jpg" alt=""></div>
-                <div class="item" style="--position: 9"><img src="Electronics.jpg" alt=""></div>
-            </div>
-        </div>
-    </main>
+  <!-- Header -->
+  <header class="header">
+  <div class="header-content">
     
+    <!-- Left: Logo -->
+    <div class="logo"><i class="fa-solid fa-crown" style="color: hsl(42, 85%, 58%);"></i>Sh.AdnanStore</div>
+    
+    <!-- Middle: Glass Box with Home + Search -->
+    <div class="glass-box">
+      <a href="index.html" class="home-link"><i class="fa-solid fa-house" style="color: hsl(42, 85%, 58%);"></i>Home</a>
+      <div class="search-bar">
+        <input type="text" placeholder="Search products...">
+        <button>🔍</button>
+      </div>
+    </div>
+    
+    <!-- Right: My Cart -->
+    <a href="mycart.html" class="cart-link">🛒 My Cart</a>
+  </div>
+</header>
+
+
+  <!-- Main Display Image -->
+  <section class="main-display">
+    <div class="main-box">
+      <img id="mainImage" src="Images/Kids.jpg" alt="Main Preview">
+      <a href="checkout.html" class="buy-btn">Buy Now</a>
+    </div>
+  </section>
+
+  <!-- Sliders at Bottom -->
+  <main>
+    <div class="slider" style="--width: 180px; --height: 140px; --quantity: 5;">
+      <div class="list">
+        <div class="item" style="--position: 1"><img src="Images/Kids.jpg" alt=""></div>
+        <div class="item" style="--position: 2"><img src="Images/Pink1.jpg" alt=""></div>
+        <div class="item" style="--position: 3"><img src="Images/Bear2.jpg" alt=""></div>
+        <div class="item" style="--position: 4"><img src="Images/Stationary1.jpg" alt=""></div>
+        <div class="item" style="--position: 5"><img src="Images/Gun1.jpg" alt=""></div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2025 Sh.AdnanStore. All rights reserved.</p>
+  </footer>
+  <script>const mainImage = document.getElementById("mainImage");
+const sliderItems = document.querySelectorAll(".slider .item img");
+
+sliderItems.forEach(img => {
+  img.addEventListener("click", () => {
+    mainImage.src = img.src;
+    mainImage.classList.add("zoom");
+    setTimeout(() => mainImage.classList.remove("zoom"), 400);
+  });
+});
+</script>
 </body>
 </html>

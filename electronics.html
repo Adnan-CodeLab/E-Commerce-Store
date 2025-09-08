@@ -115,6 +115,30 @@
       z-index: 3;
     }
 
+    .home {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #ddd;
+      width: 80px;
+      height: 50px;
+      background-color: #140534;
+      margin: auto;
+      margin-top: 5rem;
+      border-radius: 5  px;
+    }
+
+    .home a{
+      color: #ddd;
+      text-decoration: none;
+      font-weight: 900;
+    }
+
+    .home a:hover{
+      color: hsl(42, 85%, 58%);
+      text-decoration: underline;
+    }
+
     /* ========== RESPONSIVE MEDIA QUERIES ========== */
     @media (max-width: 1024px) {
       .container {
@@ -148,21 +172,22 @@
   </style>
 </head>
 <body>
+  <div class="home"><a href="index.html"><i class="fa-solid fa-house" style="color: #ddd;" ></i>Home</a></div>
   <div class="container">
     <div class="header">
-      <img src="Logo.png" class="logo">
+      <img src="Images/Logo.png" class="logo">
       <ul>
-        <li>HOME</li>
+        <li><a href="index.html" style="color: #ddd; font-size:17px; text-decoration: none;"><i class="fa-solid fa-house" style="color: hsl(42, 85%, 58%);"></i>Home</a></li>
         <li>CATEGORY</li>
         <li>INFO</li>
         <li>CONTACT</li>
       </ul>
     </div>
     <div id="slide">
-      <div class="item"><div class="image"><img src="Mobile1.jpg" alt="Mobile"></div></div>
-      <div class="item"><div class="image"><img src="Wearable.jpg" alt="Wearable"></div></div>
-      <div class="item"><div class="image"><img src="Audio2.jpg" alt="Audio"></div></div>
-      <div class="item"><div class="image"><img src="Personal Care2.jpg" alt="Personal Care"></div></div>
+      <div class="item"><div class="image"><img src="Images/Mobile1.jpg" alt="Mobile"></div></div>
+      <div class="item"><div class="image"><img src="Images/Wearable.jpg" alt="Wearable"></div></div>
+      <div class="item"><div class="image"><img src="Images/Audio2.jpg" alt="Audio"></div></div>
+      <div class="item"><div class="image"><img src="Images/Personal Care2.jpg" alt="Personal Care"></div></div>
     </div>
     <div class="directional">
       <button id="prev"><i class="fa-solid fa-angle-left"></i></button>

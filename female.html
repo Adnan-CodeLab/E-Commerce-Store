@@ -1,256 +1,212 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Female Category</title>
-<style>
-/* Reset */
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
-body{background:#fff;}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Female Category</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    /* Reset */
+    *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
+    body{background:hsl(220,35%,8%);} /* background */
 
-/* Header */
-header{
-    width:100%;
-    background:#612E51;
-    color:#fff;
-    position:relative;
-    z-index:1000;
-    padding:10px 20px;
-}
+    /* Header */
+    header{width:100%;background:hsl(220,30%,12%);color:hsl(45,15%,97%);position:relative;z-index:1000;padding:10px 20px;}
+    .header-top{display:flex;justify-content:space-between;align-items:center;width:100%;margin-bottom:10px;}
+    .logo{font-size:1.8rem;font-weight:bold;color:hsl(42,85%,58%);} /* gold */
+    .header-right{display:flex;gap:10px;align-items:center;}
+    .header-right input[type="text"]{padding:5px 10px;border-radius:20px;border:1px solid hsl(42,85%,58%);outline:none;background:hsl(220,25%,18%);color:hsl(45,15%,97%);}
+    .header-right .cart{font-size:1.5rem;color:hsl(42,85%,58%);cursor:pointer;}
 
-/* Top Row: Logo + Search/Cart */
-.header-top{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    width:100%;
-    margin-bottom:10px;
-}
+    /* Navigation Menu */
+    nav{width:100%;}
+    nav ul{display:flex;list-style:none;gap:20px;justify-content:center;}
+    nav ul li{position:relative;}
+    nav ul li a{text-decoration:none;color:hsl(45,15%,97%);padding:8px 12px;display:block;font-weight:500;transition:0.3s;}
+    nav ul li a:hover{color:hsl(42,85%,58%);}
+    nav ul li .submenu{position:absolute;top:100%;left:0;background:hsl(220,25%,18%);display:none;min-width:180px;border:1px solid hsl(42,85%,58%);border-radius:5px;z-index:1000;}
+    nav ul li .submenu a{padding:8px 12px;}
 
-/* Logo */
-.logo{
-    font-size:1.8rem;
-    font-weight:bold;
-    color:#E9B020;
-}
-
-/* Right Section */
-.header-right{
-    display:flex;
-    gap:10px;
-    align-items:center;
-}
-.header-right input[type="text"]{
-    padding:5px 10px;
-    border-radius:20px;
-    border:1px solid #E9B020;
-    outline:none;
-}
-.header-right .cart{
-    font-size:1.5rem;
-    color:#E9B020;
-    cursor:pointer;
-}
-
-/* Navigation Menu */
-nav{width:100%;}
-nav ul{
-    display:flex;
-    list-style:none;
-    gap:20px;
-    justify-content:center;
-}
-nav ul li{position:relative;}
-nav ul li a{
-    text-decoration:none;
-    color:#fff;
-    padding:8px 12px;
-    display:block;
-    font-weight:500;
-    transition:0.3s;
-}
-nav ul li a:hover{color:#E9B020;}
-
-/* Submenu */
-nav ul li .submenu{
-    position:absolute;
-    top:100%;
-    left:0;
-    background:#612E51;
-    display:none;
-    min-width:180px;
-    border:1px solid #E9B020;
-    border-radius:5px;
-    z-index:1000;
-}
-nav ul li .submenu a{padding:8px 12px;}
-
-/* Desktop Hover */
-@media screen and (min-width:769px){
-    nav ul li:hover .submenu{display:block;}
-}
-
-/* Mobile / Responsive */
-@media screen and (max-width:768px){
-    /* Top row remains same: logo left, search/cart right */
-    .header-top{margin-bottom:10px;}
-
-    /* Navigation vertical stack */
-    nav ul{
-        flex-direction:column;
-        width:100%;
-        gap:0;
+    /* Desktop Hover */
+    @media screen and (min-width:769px){
+      nav ul li:hover .submenu{display:block;}
     }
 
-    nav ul li{
-        width:100%;
-        border-bottom:1px solid #E9B020;
+    /* Mobile Nav */
+    @media screen and (max-width:768px){
+      nav ul{flex-direction:column;width:100%;gap:0;}
+      nav ul li{width:100%;border-bottom:1px solid hsl(42,85%,58%);}
+      nav ul li a{padding:12px 15px;display:flex;justify-content:space-between;align-items:center;}
+      nav ul li .submenu{position:relative;top:0;left:0;min-width:100%;border-radius:0;display:none;border:none;background:hsl(220,25%,18%);}
+      nav ul li .submenu a{padding:10px 30px;}
+      nav ul li a.toggle::after{content:"▼";font-size:0.8rem;}
     }
 
-    nav ul li a{
-        padding:12px 15px;
-        display:flex;
-        justify-content:space-between;
-        align-items:center;
-    }
+    /* Product Grid */
+    .products{
+        margin-top: 5rem;
+        padding:20px;display:grid;grid-template-columns:repeat(4,1fr);gap:50px;}
+    .product-card{
+        margin-bottom: 5rem;
+        position:relative;border:2px solid hsl(42,85%,58%);border-radius:10px;overflow:hidden;text-align:center;transition:0.3s;cursor:pointer;background:hsl(220,30%,12%);}
+    .product-card img{width:100%;height:auto;display:block;}
+    .product-card h3{color:hsl(45,15%,97%);margin:10px 0;}
+    .product-card p{color:hsl(42,85%,58%);font-weight:bold;margin-bottom:10px;}
+    .product-card:hover{transform:scale(1.05);box-shadow:0 0 15px hsl(42,85%,58%);}
 
-    nav ul li .submenu{
-        position:relative;
-        top:0;
-        left:0;
-        min-width:100%;
-        border-radius:0;
-        display:none;
-        border:none;
-        background:#712E61;
-    }
+    /* Sale Badge */
+    .sale-badge{position:absolute;top:10px;left:10px;background:hsl(42,85%,58%);color:hsl(220,30%,15%);font-size:0.8rem;font-weight:bold;padding:5px 8px;border-radius:5px;}
 
-    nav ul li .submenu a{
-        padding:10px 30px;
+    /* Responsive Grid */
+    @media screen and (max-width:768px){
+      .products{grid-template-columns:repeat(2,1fr);}
     }
-
-    nav ul li a.toggle::after{
-        content:"▼";
-        font-size:0.8rem;
-    }
-}
-</style>
+  </style>
 </head>
 <body>
 
 <header>
-    <!-- Top Row: Logo + Search/Cart -->
-    <div class="header-top">
-        <div class="logo">MyStore</div>
-        <div class="header-right">
-            <input type="text" placeholder="Search...">
-            <a href="mycart.html"><div class="cart">&#128722;</div></a>
-        </div>
+  <!-- Top Row -->
+  <div class="header-top">
+    <div class="logo"><i class="fa-solid fa-crown" style="color: hsl(42, 85%, 58%);"></i>Sh.AdnanStore</div>
+    <div class="header-middle">
+        <a href="index.html" style="font-size: 20px; text-decoration: none; color: hsl(42, 85%, 58%);" ><i class="fa-solid fa-house" style="color: hsl(42, 85%, 58%);"></i>Home</a>
     </div>
+    <div class="header-right">
+      <input type="text" placeholder="Search...">
+      <a href="mycart.html"><div class="cart">&#128722;</div></a>
+    </div>
+  </div>
 
-    <!-- Navigation -->
-    <nav>
-        <ul>
-            <li>
-                <a href="#" class="toggle">Bags</a>
-                <ul class="submenu">
-                    <li><a href="#">Pouches</a></li>
-                    <li><a href="#">Purses</a></li>
-                    <li><a href="#">Handbags</a></li>
-                </ul>
-            </li>
-            <li>
-                <a href="#" class="toggle">Clothes</a>
-                <ul class="submenu">
-                    <li><a href="#">Lawn</a></li>
-                    <li><a href="#">Reshmi</a></li>
-                    <li><a href="#">Cotton</a></li>
-                </ul>
-            </li>
-            <li>
-                <a href="#" class="toggle">Cosmetics</a>
-                <ul class="submenu">
-                    <li><a href="#">Bleaches</a></li>
-                    <li><a href="#">Lipsticks</a></li>
-                    <li><a href="#">Lip Gloss</a></li>
-                    <li><a href="#">Makeup Kits</a></li>
-                    <li><a href="#">Creams</a></li>
-                </ul>
-            </li>
-            <li>
-                <a href="#" class="toggle">Jewelry</a>
-                <ul class="submenu">
-                    <li><a href="#">Earrings</a></li>
-                    <li><a href="#">Bangles</a></li>
-                    <li><a href="#">Necklaces</a></li>
-                    <li><a href="#">Rings</a></li>
-                </ul>
-            </li>
-            <li>
-                <a href="#" class="toggle">Shoes</a>
-                <ul class="submenu">
-                    <li><a href="#">Flats</a></li>
-                    <li><a href="#">Heels</a></li>
-                    <li><a href="#">Sandals</a></li>
-                </ul>
-            </li>
-            <li>
-                <a href="#" class="toggle">Accessories</a>
-                <ul class="submenu">
-                    <li><a href="#">Belts</a></li>
-                    <li><a href="#">Sunglasses</a></li>
-                    <li><a href="#">Scarves</a></li>
-                    <li><a href="#">Hats</a></li>
-                </ul>
-            </li>
+  <!-- Navigation -->
+  <nav>
+    <ul>
+      <li>
+        <a href="#" class="toggle">Bags</a>
+        <ul class="submenu">
+          <li><a href="#">Pouches</a></li>
+          <li><a href="#">Purses</a></li>
+          <li><a href="#">Handbags</a></li>
         </ul>
-    </nav>
+      </li>
+      <li>
+        <a href="#" class="toggle">Clothes</a>
+        <ul class="submenu">
+          <li><a href="#">Lawn</a></li>
+          <li><a href="#">Reshmi</a></li>
+          <li><a href="#">Cotton</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#" class="toggle">Cosmetics</a>
+        <ul class="submenu">
+          <li><a href="#">Bleaches</a></li>
+          <li><a href="#">Lipsticks</a></li>
+          <li><a href="#">Lip Gloss</a></li>
+          <li><a href="#">Makeup Kits</a></li>
+          <li><a href="#">Creams</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#" class="toggle">Jewelry</a>
+        <ul class="submenu">
+          <li><a href="#">Earrings</a></li>
+          <li><a href="#">Bangles</a></li>
+          <li><a href="#">Necklaces</a></li>
+          <li><a href="#">Rings</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#" class="toggle">Shoes</a>
+        <ul class="submenu">
+          <li><a href="#">Flats</a></li>
+          <li><a href="#">Heels</a></li>
+          <li><a href="#">Sandals</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#" class="toggle">Accessories</a>
+        <ul class="submenu">
+          <li><a href="#">Belts</a></li>
+          <li><a href="#">Sunglasses</a></li>
+          <li><a href="#">Scarves</a></li>
+          <li><a href="#">Hats</a></li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
 </header>
+
 <main>
-  <!-- Ring Box Section -->
-  <section class="ring-box-section" style="padding:20px; display:flex; justify-content:center;">
-    <a href="rings.html" class="ring-box" style="width:200px; border:2px solid #E9B020; border-radius:10px; overflow:hidden; text-align:center; transition:0.3s; cursor:pointer;">
-      <img src="Ring.jpg" alt="Ring" style="width:100%; height:auto; display:block;">
-      <h3 style="color:#612E51; margin:10px 0;">Golden Ring</h3>
-      <p style="color:#E9B020; font-weight:bold;">$99</p>
-    </a>
+  <!-- Products Section -->
+  <section class="products">
+    <div class="product-card">
+      <span class="sale-badge">Sale</span>
+      <img src="Images/Ring.jpg" alt="Ring">
+      <h3>Golden Ring</h3>
+      <p>$99</p>
+    </div>
+    <div class="product-card">
+      <span class="sale-badge">Sale</span>
+      <img src="Images/Ring.jpg" alt="Bag">
+      <h3>Leather Bag</h3>
+      <p>$120</p>
+    </div>
+    <div class="product-card">
+      <span class="sale-badge">Sale</span>
+      <img src="Images/Ring.jpg" alt="Lipstick">
+      <h3>Red Lipstick</h3>
+      <p>$20</p>
+    </div>
+    <div class="product-card">
+      <span class="sale-badge">Sale</span>
+      <img src="Images/Ring.jpg" alt="Shoes">
+      <h3>Heels</h3>
+      <p>$75</p>
+    </div>
+    <div class="product-card">
+      <span class="sale-badge">Sale</span>
+      <img src="Images/Ring.jpg" alt="Ring">
+      <h3>Golden Ring</h3>
+      <p>$99</p>
+    </div>
+    <div class="product-card">
+      <span class="sale-badge">Sale</span>
+      <img src="Images/Ring.jpg" alt="Bag">
+      <h3>Leather Bag</h3>
+      <p>$120</p>
+    </div>
+    <div class="product-card">
+      <span class="sale-badge">Sale</span>
+      <img src="Images/Ring.jpg" alt="Lipstick">
+      <h3>Red Lipstick</h3>
+      <p>$20</p>
+    </div>
+    <div class="product-card">
+      <span class="sale-badge">Sale</span>
+      <img src="Images/Ring.jpg" alt="Shoes">
+      <h3>Heels</h3>
+      <p>$75</p>
+    </div>
   </section>
 </main>
 
-<style>
-.ring-box:hover{
-    transform: scale(1.05);
-    box-shadow: 0 0 15px #E9B020;
-}
-@media screen and (max-width:768px){
-    .ring-box-section{
-        flex-direction:column;
-        align-items:center;
-    }
-    .ring-box{
-        width:80%;
-        margin-bottom:15px;
-    }
-}
-</style>
 <script>
-// Mobile toggle submenu
-const toggles = document.querySelectorAll('nav ul li a.toggle');
-
-toggles.forEach(toggle => {
+  // Mobile toggle submenu
+  const toggles = document.querySelectorAll('nav ul li a.toggle');
+  toggles.forEach(toggle => {
     toggle.addEventListener('click', function(e){
-        if(window.innerWidth <= 768){
-            e.preventDefault();
-            const submenu = this.nextElementSibling;
-            if(submenu.style.display === 'block'){
-                submenu.style.display = 'none';
-            } else {
-                submenu.style.display = 'block';
-            }
+      if(window.innerWidth <= 768){
+        e.preventDefault();
+        const submenu = this.nextElementSibling;
+        if(submenu.style.display === 'block'){
+          submenu.style.display = 'none';
+        } else {
+          submenu.style.display = 'block';
         }
+      }
     });
-});
+  });
 </script>
 
 </body>
