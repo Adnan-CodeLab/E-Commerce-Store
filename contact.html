@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Contact Us - Artistic Page</title>
 <link rel="stylesheet" href="circle.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style>
 :root {
   --background: hsl(220 35% 8%);
@@ -248,10 +249,24 @@ form.contact-form.large {
         <button type="submit">Send</button>
     </form>
 </div>
-
+<div class="direction-heading">
+    <h1 style="margin-left:10rem;">Press<i class="fa fa-long-arrow-down" aria-hidden="true"></i> Directions for directions</h1>
+</div>
 <!-- Compact Map -->
 <div class="map-section">
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3313.134223579965!2d74.35868831520166!3d31.52036998139498!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39191a52c5e7b1ef%3A0x37b9b0c7f5a65d3f!2sLahore%2C%20Pakistan!5e0!3m2!1sen!2s!4v1693920000000!5m2!1sen!2s" allowfullscreen="" loading="lazy"></iframe>
+    <iframe
+  src="https://www.google.com/maps?q=32.062796,73.697467&hl=es;z=15&output=embed"
+  width="600"
+  height="450"
+  style="border:0;"
+  allowfullscreen=""
+  loading="lazy">
+</iframe>
+<div class="map-section">
+    <input id="start" type="text" placeholder="Enter starting point" style="width: 70%; padding: 8px; border-radius: 5px; border:1px solid var(--border); margin:10px 0;">
+    <button onclick="calculateRoute()" style="padding: 8px 15px; border:none; border-radius:5px; background:var(--accent); color:var(--accent-foreground); cursor:pointer;">Get Directions</button>
+    <div id="map" style="height:400px; width:100%; margin-top:10px;"></div>
+</div>
 </div>
 
 <footer>
@@ -259,6 +274,8 @@ form.contact-form.large {
 </footer>
 
 <script>
+
+    
 // Floating shapes random movement (optional enhancement)
 const shapes = document.querySelectorAll('.shape');
 shapes.forEach(shape => {
