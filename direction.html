@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Live Truck Location — Hafizabad Food Truck</title>
+  <link rel="stylesheet" href="circle.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+  <style>
+    :root{
+      --bg:#0f1220; --card:#171a2b; --text:#e8ecff; --muted:#a9b4d0; --accent:#E9B020; --brand:#612E51;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial;background:linear-gradient(180deg,var(--bg),#0b0d18);color:var(--text)}
+    header{padding:16px 20px;border-bottom:1px solid #22253a;background:linear-gradient(180deg,#12162a,#101326)}
+    h1{margin:0;font-weight:800;font-size:clamp(18px,3.5vw,28px);letter-spacing:0.2px}
+    .sub{color:var(--muted);font-size:12px;margin-top:4px}
+    .container{display:grid;gap:16px;padding:16px;grid-template-columns:1fr;max-width:1100px;margin:0 auto}
+    .card{background:var(--card);border:1px solid #242842;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+    .controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:12px 12px;border-bottom:1px solid #23263a}
+    .controls > *{font-size:14px}
+    label{opacity:.9}
+    input,select,button{background:#0f1327;border:1px solid #2b3050;color:var(--text);padding:8px 10px;border-radius:10px}
+    input[type="password"], input[type="text"]{min-width:160px}
+    button{cursor:pointer;border:1px solid transparent;background:linear-gradient(180deg,#20264a,#1a2040);transition:.2s}
+    button:hover{filter:brightness(1.15)}
+    button.primary{background:linear-gradient(180deg,var(--accent),#d59d12);color:#1a1200;font-weight:700}
+    .map-wrap{height:72vh;border-radius:0 0 16px 16px;overflow:hidden}
+    #map{height:100%;width:100%}
+    .footer{padding:10px 14px;color:var(--muted);font-size:12px;border-top:1px solid #23263a}
+    .badge{padding:6px 10px;border-radius:999px;background:#1b2344;border:1px solid #2c376b;font-weight:700}
+    .row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+    .ok{color:#58f18e}
+    .warn{color:#ffd166}
+    .err{color:#ff6b6b}
+    .hidden{display:none}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Hafizabad Mangat Road Sh.Adnan Store — Live Location</h1>
+    <div class="sub"> Built with Firebase + Leaflet (OSM).
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <div class="controls">
+        <div class="row">
+          <label>Mode</label>
+          <select id="mode">
+            <option value="viewer">Customer View</option>
+            <option value="driver">Shop Shared Location</option>
+          </select>
+        </div>
+        <div class="row">
+          <label>Shop ID</label>
+          <input id="vehicleId" type="text" value="Sh.Adnan Store" />
+        </div>
+        <div class="row driver-only hidden">
+          <label>Location Pin</label>
+          <input id="driverPin" type="password" placeholder="Set a secret PIN" />
+        </div>
+        <div class="row">
+          <button id="connectBtn" class="primary">Connect</button>
+          <button id="shareBtn" class="hidden">▶ Start Sharing</button>
+          <button id="stopBtn" class="hidden">⏹ Stop</button>
+          <span id="status" class="badge">Idle</span>
+        </div>
+      </div>
+      <div class="map-wrap"><div id="map"></div></div>
+      <div class="footer" id="info">Sh.Adnan Store Direction Shower Map</div>
+    </section>
+  </main>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <!-- Firebase v9 (modular) -->
+  <script type="module">
+    // ===== 1) EDIT THESE WITH YOUR OWN FIREBASE PROJECT =====
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_AUTH_DOMAIN",
+      databaseURL: "YOUR_DATABASE_URL", // e.g. https://your-project-id-default-rtdb.asia-southeast1.firebasedatabase.app
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_STORAGE_BUCKET",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+    // =========================================================
+
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+    import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-database.js";
+    import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+
+    // UI elements
+    const $ = (s)=>document.querySelector(s);
+    const modeSel = $('#mode');
+    const vehicleInput = $('#vehicleId');
+    const pinInput = $('#driverPin');
+    const connectBtn = $('#connectBtn');
+    const shareBtn = $('#shareBtn');
+    const stopBtn = $('#stopBtn');
+    const statusBadge = $('#status');
+    const info = $('#info');
+
+    // Map setup
+    const map = L.map('map', { zoomControl:true });
+    const hafizabad = [32.0709, 73.6880];
+    map.setView(hafizabad, 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19, attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    let marker=null, accuracyCircle=null, pathLine=null;
+
+    function setStatus(text, cls=''){
+      statusBadge.textContent=text;
+      statusBadge.classList.remove('ok','warn','err');
+      if(cls) statusBadge.classList.add(cls);
+    }
+
+    function setDriverUI(show){
+      document.querySelectorAll('.driver-only').forEach(el=>{
+        el.classList.toggle('hidden', !show);
+      });
+      shareBtn.classList.toggle('hidden', !show);
+    }
+
+    // Mode from URL (?mode=driver&vehicle=...)
+    const url = new URL(location.href);
+    const initialMode = url.searchParams.get('mode') || 'viewer';
+    const initialVehicle = url.searchParams.get('vehicle') || vehicleInput.value;
+    const initialPin = url.searchParams.get('pin') || '';
+    modeSel.value = initialMode;
+    vehicleInput.value = initialVehicle;
+    pinInput.value = initialPin;
+    setDriverUI(initialMode==='driver');
+
+    let app=null, db=null, auth=null, connected=false, watchId=null;
+
+    async function connect(){
+      if(connected) return;
+      setStatus('Connecting…','warn');
+      app = initializeApp(firebaseConfig);
+      db = getDatabase(app);
+      auth = getAuth(app);
+      await signInAnonymously(auth);
+      connected = true;
+      setStatus('Connected','ok');
+      connectBtn.disabled = true;
+      const m = modeSel.value;
+      if(m==='driver') setDriverUI(true); else setDriverUI(false);
+      if(m==='viewer') subscribeToVehicle();
+    }
+
+    // ===== Viewer mode: subscribe to DB and update map =====
+    function subscribeToVehicle(){
+      const id = vehicleInput.value.trim();
+      if(!id){ setStatus('No Vehicle ID','err'); return; }
+      const r = ref(db, 'vehicles/'+id);
+      onValue(r, (snap)=>{
+        const d = snap.val();
+        if(!d){ setStatus('Waiting for driver…','warn'); return; }
+        const { lat, lng, accuracy=0, speed=null, heading=null, ts } = d;
+        const pos = [lat,lng];
+        if(!marker){
+          marker = L.marker(pos).addTo(map);
+          pathLine = L.polyline([pos], { weight: 4 }).addTo(map);
+        } else {
+          marker.setLatLng(pos);
+          pathLine.addLatLng(pos);
+        }
+        if(accuracyCircle){ accuracyCircle.setLatLng(pos).setRadius(accuracy); }
+        else { accuracyCircle = L.circle(pos, { radius: accuracy }).addTo(map); }
+        map.setView(pos, Math.max(map.getZoom(), 15));
+        const time = ts ? new Date(ts).toLocaleString() : '—';
+        // Add Google Maps Directions link
+        const gmapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
+        marker.bindPopup(`<b>Food Truck Location</b><br/>Lat: ${lat.toFixed(5)}, Lng: ${lng.toFixed(5)}<br/><a href="${gmapsUrl}" target="_blank">📍 Get Directions in Google Maps</a>`);
+        info.innerHTML = `📍 <b>Live</b> — <b>Lat:</b> ${lat.toFixed(5)} <b>Lng:</b> ${lng.toFixed(5)} | <b>Accuracy:</b> ±${Math.round(accuracy)} m ${speed!==null?`| <b>Speed:</b> ${ (speed*3.6).toFixed(0) } km/h`:''} ${heading!==null?`| <b>Heading:</b> ${Math.round(heading)}°`:''} | <b>Updated:</b> ${time}`;
+      });
+    }
+
+    // ===== Driver mode: watchPosition and write to DB =====
+    function startSharing(){
+      if(!connected){ setStatus('Not connected','err'); return; }
+      const id = vehicleInput.value.trim();
+      if(!id){ setStatus('Vehicle ID required','err'); return; }
+      const pin = pinInput.value.trim();
+      if(!pin){ setStatus('Driver PIN required','err'); return; }
+
+      if(!('geolocation' in navigator)){
+        setStatus('GPS not available','err'); return;
+      }
+
+      setStatus('Requesting GPS…','warn');
+      shareBtn.classList.add('hidden');
+      stopBtn.classList.remove('hidden');
+
+      watchId = navigator.geolocation.watchPosition(async (pos)=>{
+        const { latitude, longitude, accuracy, speed, heading } = pos.coords;
+        const payload = {
+          lat: latitude,
+          lng: longitude,
+          accuracy: accuracy ?? 0,
+          speed: speed ?? null,
+          heading: heading ?? null,
+          ts: Date.now(),
+          pinHash: await sha256(pin) // lightweight check on viewer side if needed
+        };
+        await set(ref(db, 'vehicles/'+id), payload);
+        setStatus('Sharing live','ok');
+        // Update local map too
+        const p=[latitude,longitude];
+        if(!marker){ 
+          marker = L.marker(p).addTo(map); 
+          pathLine = L.polyline([p], { weight:4 }).addTo(map);
+        } else { 
+          marker.setLatLng(p); 
+          pathLine.addLatLng(p);
+        }
+        if(accuracyCircle){ accuracyCircle.setLatLng(p).setRadius(accuracy||0); }
+        else { accuracyCircle = L.circle(p, { radius: accuracy||0 }).addTo(map); }
+        if(map.getZoom()<15) map.setView(p, 16);
+      }, (err)=>{
+        setStatus(err.message||'GPS error','err');
+      }, { enableHighAccuracy:true, maximumAge: 4000, timeout: 15000 });
+    }
+
+    function stopSharing(){
+      if(watchId!==null){ navigator.geolocation.clearWatch(watchId); watchId=null; }
+      stopBtn.classList.add('hidden');
+      shareBtn.classList.remove('hidden');
+      setStatus('Stopped','warn');
+    }
+
+    async function sha256(msg){
+      const enc = new TextEncoder();
+      const digest = await crypto.subtle.digest('SHA-256', enc.encode(msg));
+      return Array.from(new Uint8Array(digest)).map(b=>b.toString(16).padStart(2,'0')).join('');
+    }
+
+    // Events
+    modeSel.addEventListener('change', ()=>{
+      const m = modeSel.value;
+      setDriverUI(m==='driver');
+      if(m==='viewer' && connected) subscribeToVehicle();
+    });
+    connectBtn.addEventListener('click', connect);
+    shareBtn.addEventListener('click', startSharing);
+    stopBtn.addEventListener('click', stopSharing);
+
+    // Auto-connect for viewer mode to show map quickly
+    if(initialMode==='viewer') connect();
+  </script>
+  <audio id="clickSound" src="optimized-click (1).mp3" preload="auto" ></audio>
+    <audio id="typingSound" src="short-typing-sound.mp3" preload="auto"></audio>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <script src="test.js"></script>
+    <script src="ct.js"></script>
+</body>
+</html>
