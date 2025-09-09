@@ -1,30 +1,32 @@
-  document.addEventListener("click", function(e) {
-  if (!e.isTrusted) return; // ignore programmatic clicks
-  const sound = document.getElementById("clickSound");
-  if (sound) {
-    sound.currentTime = 0;
-    sound.play();
-  }
-  // GLOW OVERLAY
+document.addEventListener("touchstart", handleClickEffect);
+document.addEventListener("click", handleClickEffect);
+
+function handleClickEffect(e) {
+  if (!e.isTrusted) return;
+
+  const x = e.pageX || e.touches?.[0].pageX;
+  const y = e.pageY || e.touches?.[0].pageY;
+
+  // Glow
   const glow = document.createElement("div");
   glow.classList.add("click-glow");
-  glow.style.left = `${e.pageX}px`;
-  glow.style.top = `${e.pageY}px`;
+  glow.style.left = `${x}px`;
+  glow.style.top = `${y}px`;
   document.body.appendChild(glow);
 
-  // SPARK
+  // Spark
   const spark = document.createElement("span");
   spark.classList.add("click-spark");
-  spark.style.left = `${e.pageX}px`;
-  spark.style.top = `${e.pageY}px`;
+  spark.style.left = `${x}px`;
+  spark.style.top = `${y}px`;
   document.body.appendChild(spark);
 
-  // Clean up after animation
   setTimeout(() => {
     glow.remove();
     spark.remove();
   }, 600);
-});
+}
+
 
  const typingSound = document.getElementById("typingSound");
 
