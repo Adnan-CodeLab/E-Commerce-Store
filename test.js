@@ -8,15 +8,15 @@
   // GLOW OVERLAY
   const glow = document.createElement("div");
   glow.classList.add("click-glow");
-  glow.style.left = `${e.clientX}px`;
-  glow.style.top = `${e.clientY}px`;
+  glow.style.left = `${e.pageX}px`;
+  glow.style.top = `${e.pageY}px`;
   document.body.appendChild(glow);
 
   // SPARK
   const spark = document.createElement("span");
   spark.classList.add("click-spark");
-  spark.style.left = `${e.clientX}px`;
-  spark.style.top = `${e.clientY}px`;
+  spark.style.left = `${e.pageX}px`;
+  spark.style.top = `${e.pageY}px`;
   document.body.appendChild(spark);
 
   // Clean up after animation
