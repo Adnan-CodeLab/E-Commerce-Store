@@ -1,8 +1,11 @@
-document.addEventListener("touchstart", handleClickEffect);
-document.addEventListener("click", handleClickEffect);
-
 function handleClickEffect(e) {
   if (!e.isTrusted) return;
+
+  const sound = document.getElementById("clickSound");
+  if (sound) {
+    sound.currentTime = 0;
+    sound.play();
+  }
 
   const x = e.pageX || e.touches?.[0].pageX;
   const y = e.pageY || e.touches?.[0].pageY;
@@ -27,54 +30,31 @@ function handleClickEffect(e) {
   }, 600);
 }
 
+document.addEventListener("click", handleClickEffect);
+document.addEventListener("touchstart", handleClickEffect);
 
- const typingSound = document.getElementById("typingSound");
+// Typing Sound
+const typingSound = document.getElementById("typingSound");
 
-  document.addEventListener("keydown", function (e) {
-    const target = e.target;
-    // Only play sound when typing inside input or textarea
-    if (target.tagName === "INPUT" || target.tagName === "TEXTAREA") {
-      if (typingSound) {
-        typingSound.currentTime = 0;
-        typingSound.play();
-      }
+document.addEventListener("keydown", function (e) {
+  const target = e.target;
+  if (target.tagName === "INPUT" || target.tagName === "TEXTAREA") {
+    if (/^[a-zA-Z0-9]$/.test(e.key)) {
+      typingSound.currentTime = 0;
+      typingSound.play();
     }
-  });
-
-  const allowedKeys = /^[a-zA-Z0-9]$/;
-if (allowedKeys.test(e.key)) {
-  typingSound.currentTime = 0;
-  typingSound.play();
-}
-
-const togglePassword = document.getElementById("togglePassword");
-  const passwordInput = document.getElementById("pass-btn");
-
-  togglePassword.addEventListener("click", () => {
-    const isPassword = passwordInput.type === "password";
-    passwordInput.type = isPassword ? "text" : "password";
-
-    togglePassword.classList.toggle("fa-eye-slash", !isPassword);
-    togglePassword.classList.toggle("fa-eye", isPassword);
-  });
-
-var a = 0;
-
-function pass() {
-  const passInput = document.getElementById("pass-btn");
-  const icon = document.getElementById("togglePassword");
-
-  if (a === 1) {
-    passInput.type = "password";
-    icon.classList.remove("fa-eye");
-    icon.classList.add("fa-eye-slash");
-    a = 0;
-  } else {
-    passInput.type = "text";
-    icon.classList.remove("fa-eye-slash");
-    icon.classList.add("fa-eye");
-    a = 1;
   }
-}
+});
+
+// Password toggle
+const togglePassword = document.getElementById("togglePassword");
+const passwordInput = document.getElementById("pass-btn");
+
+togglePassword.addEventListener("click", () => {
+  const isPassword = passwordInput.type === "password";
+  passwordInput.type = isPassword ? "text" : "password";
+  togglePassword.classList.toggle("fa-eye-slash", !isPassword);
+  togglePassword.classList.toggle("fa-eye", isPassword);
+});
 
 
